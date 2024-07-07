@@ -15,6 +15,7 @@ const filepath = "./song_data.json"
 const stateKey = 'spotify_auth_state';
 let access_token = null;
 let song_id;
+let old_data;
 // Route handler for initiating the Spotify authentication process
 async function fetchCurrentlyPlaying() {
     try {
@@ -46,14 +47,34 @@ async function fetchCurrentlyPlaying() {
       const trackData = await fetchCurrentlyPlaying();
       // Here you can broadcast or handle the updated trackData as needed
       song_id = trackData.item.id;
-      data = {id:song_id}
+      song_name = trackData.item.name
+      artist = trackData.item.album.artists[0].name
+      fs.readFile('song_data.json', 'utf8', (err, jsonString) => {
+        if (err) {
+            console.log('File read failed:', err);
+            return;
+        }
+    
+        // Parse JSON string into JavaScript object
+        const old_data = JSON.parse(jsonString);
+    
+    });
+      data = {id:song_id,name:song_name, artist:artist}
       const jsonData = JSON.stringify(data, null, 2);
+      if(old_data!==jsonData){
+        old_data = jsonData;
       fs.writeFile(filepath, jsonData, 'utf8', (err) => {
         if (err) {
           console.error('Error writing file:', err);
           return;
         }});
-      console.log('Currently playing:', trackData.item.id);
+        console.log(old_data===jsonData);
+      console.log('Currently playing:', trackData.item.album.artists[0].name);
+      }
+      else{
+        console.log("Still same song playing...")
+      }
+
     } catch (error) {
       console.error('Error fetching currently playing track:', error.message);
     }
