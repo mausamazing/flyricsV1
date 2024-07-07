@@ -1,0 +1,24 @@
+{
+  "name": "flyrics",
+  "version": "1.0.0",
+  "description": "Free Lyrics for Everyone",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mausamazing/flyrics.git"
+  },
+  "author": "mausamazing",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/mausamazing/flyrics/issues"
+  },
+  "homepage": "https://github.com/mausamazing/flyrics#readme",
+  "dependencies": {
+    "axios": "^1.7.2",
+    "express": "^4.19.2",
+    "querystring": "^0.2.1"
+  }
+}
