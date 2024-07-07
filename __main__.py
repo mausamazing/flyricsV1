@@ -1,8 +1,15 @@
+import wave, time,json
 from lyrics import get_lyrics
 from fingerprinting import acoust_fingerprint_generator
 from API import request_handler
 from listener import audio_listener
-import wave, time
+
+
+data = json.load("song_data.json")
+listen_in_real_time = False
+last_fingerprint =""
+current_lyrics = ""
+
 def get_duration_wave(file_path):
    with wave.open(file_path, 'r') as audio_file:
       frame_rate = audio_file.getframerate()
@@ -10,9 +17,6 @@ def get_duration_wave(file_path):
       duration = n_frames / float(frame_rate)
       return duration
 
-listen_in_real_time = False
-last_fingerprint =""
-current_lyrics = ""
 
 if __name__ == "__main__":
 
