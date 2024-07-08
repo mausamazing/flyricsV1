@@ -1,6 +1,6 @@
 from lyricsgenius import Genius
-
-genius = Genius("token from lyrics")
+import requests
+genius = Genius("KnoQ9iS4-beQnhuEk1QfnCcuwtu1Cxklxq8IGYKIaumxfWzKfGLtyhkhSoKT6nhS")
 global is_corrupted 
 is_corrupted= False #checks if the lyrics are extra super duper corrupted
 def get_data(song_name, author_name):
