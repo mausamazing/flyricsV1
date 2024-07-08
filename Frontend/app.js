@@ -145,6 +145,35 @@ app.get('/fetch-currently-playing', async (req, res) => {
         res.status(500).send('Error: Unable to start fetching currently playing track.');
     }
 });
+let lyricsContent = '';
+const lyricsFilePath = "lyrics.txt";
+// Function to read lyrics from file
+function readLyricsFile() {
+    fs.readFile(lyricsFilePath, 'utf8', (err, data) => {
+        if (err) {
+            console.error('Error reading file:', err);
+            lyricsContent = 'Error reading lyrics file';
+            return;
+        }
+        lyricsContent = data;
+    });
+}
+
+// Initial read of the lyrics file
+readLyricsFile();
+
+// Watch for changes in the lyrics file
+fs.watch(lyricsFilePath, (eventType, filename) => {
+    if (eventType === 'change') {
+        console.log('lyrics.txt file has been updated');
+        readLyricsFile(); // Re-read the file on change
+    }
+});
+
+// Route to display lyrics
+app.get('/lyrics', (req, res) => {
+    res.send(`<pre>${lyricsContent}</pre>`);
+});
 
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
